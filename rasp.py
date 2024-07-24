@@ -17,7 +17,7 @@ import pandas as pd
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
 
-source_folder = "C:\\Users\\Harsh kumar\\OneDrive\\Desktop\\mongo\\"
+source_folder = ""
 app = Flask(__name__, static_folder=f'{source_folder}static', static_url_path='')
 app.config['UPLOAD_FOLDER'] = f'{source_folder}uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -31,12 +31,7 @@ if not os.path.exists(excel_file_path):
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Load models
-try:
-    plate_model = YOLO(f'{source_folder}Models/Plate_detect.pt')
-    char_model = YOLO(f'{source_folder}Models/String_Detect-2.pt')
-except Exception as e:
-    logging.error(f"Failed to load models: {e}")
-    raise
+
 
 # Class name mapping for character detection
 class_name_mapping = {
@@ -49,7 +44,7 @@ class_name_mapping = {
 }
 
 stop_detection_flag = False
-rtsp_link = "rtsp://admin2:Admin123@192.168.10.29:554/cam/realmonitor?channel=1&subtype=0"
+rtsp_link = ""
 
 def detect_characters(image):
     char_results = char_model(image, conf=0.3)
